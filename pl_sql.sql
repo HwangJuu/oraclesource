@@ -30,7 +30,7 @@ END;
 /
 
 DECLARE
-    --상수선언
+    -- 상수선언
     v_tax CONSTANT NUMBER(1) := 3;
 BEGIN
     dbms_output.put_line('V_TAX : ' || v_tax);
@@ -49,7 +49,7 @@ END;
 -- NOT NULL 지정
 DECLARE
     v_deptno NUMBER(2) NOT NULL := 10;
---  V_DEPTNO NUMBER(2) NOT NULL DEFAULT 20;
+--    V_DEPTNO NUMBER(2) NOT NULL DEFAULT 20;
 BEGIN
     dbms_output.put_line('V_DEPTNO : ' || v_deptno);
 END;
@@ -62,50 +62,60 @@ END;
 
 --V_NUMBER 변수 선언하고 13 값을 할당한 뒤 해당 변수가 홀, 짝 출력
 DECLARE
-   V_NUMBER NUMBER :=13;
-begin 
-    if mod(V_NUMBER,2) = 1 THEN 
+    v_number NUMBER := 13;
+BEGIN
+    IF MOD(v_number, 2) = 1 THEN
         dbms_output.put_line('홀수');
     END IF;
-end;
+END;
 /
 
 -- 짝수 
 DECLARE
-   V_NUMBER NUMBER :=13;
-BEGIN 
-    IF MOD(V_NUMBER,2) = 1 THEN 
-       dbms_output.put_line('홀수'); 
+    v_number NUMBER := 14;
+BEGIN
+    IF MOD(v_number, 2) = 1 THEN
+        dbms_output.put_line('홀수');
+    ELSE
+        dbms_output.put_line('짝수');
     END IF;
-end;
+END;
 /
     
 --학점
 DECLARE
-   V_NUMBER NUMBER :=87;
-BEGIN 
-  IF V_NUMBER >=90 THEN
-      DBMS_OUTPUT.PUT_LINE('A 학점');
-  ELSIF V_NUMBER >=80 THEN
-      DBMS_OUTPUT.PUT_LINE('B 학점');
-  ELSIF V_NUMBER >=70 THEN
-      DBMS_OUTPUT.PUT_LINE('C 학점');
-  ELSIF V_NUMBER >=60 THEN
-      DBMS_OUTPUT.PUT_LINE('D 학점'); 
-end;
+    v_number NUMBER := 87;
+BEGIN
+    IF v_number >= 90 THEN
+        dbms_output.put_line('A 학점');
+    ELSIF v_number >= 80 THEN
+        dbms_output.put_line('B 학점');
+    ELSIF v_number >= 70 THEN
+        dbms_output.put_line('C 학점');
+    ELSIF v_number >= 60 THEN
+        dbms_output.put_line('D 학점');
+    ELSE
+        dbms_output.put_line('F 학점');
+    END IF;
+END;
 /
+
 
 --CASE ~ WITH
 DECLARE
-  V_SCORE NUMBER := 77;
+    v_score NUMBER := 77;
 BEGIN
-   CASE TRUNC(V_SCORE/10)
-   WHEN 10 THEN DBMS_OUTPUT.PUT_LINE('A 학점'); 
-   WHEN 9 THEN DBMS_OUTPUT.PUT_LINE('B 학점'); 
-   WHEN 8 THEN DBMS_OUTPUT.PUT_LINE('C 학점'); 
-   WHEN 7 THEN DBMS_OUTPUT.PUT_LINE('D 학점'); 
-   ELSE
-        DBMS_OUTPUT.PUT_LINE('F 학점'); 
+    CASE trunc(v_score / 10)
+        WHEN 10 THEN
+            dbms_output.put_line('A 학점');
+        WHEN 9 THEN
+            dbms_output.put_line('B 학점');
+        WHEN 8 THEN
+            dbms_output.put_line('C 학점');
+        WHEN 7 THEN
+            dbms_output.put_line('D 학점');
+        ELSE
+            dbms_output.put_line('F 학점');
     END CASE;
 END;
 /
@@ -117,48 +127,49 @@ END;
 --Cursor FOR LOOP
 
 DECLARE
-    V_DEPTNO NUMBER := 0;
+    v_deptno NUMBER := 0;
 BEGIN
-LOOP 
-    DBMS_OUTPUT.PUT_LINE('현재 V_DEPTNO : ' ||V_DEPTNO);
-    V_DEPTNO := V_DEPTNO +1;
-    EXIT WHEN V_DEPTNO>4;
+    LOOP
+        dbms_output.put_line('현재 V_DEPTNO : ' || v_deptno);
+        v_deptno := v_deptno + 1;
+        EXIT WHEN v_deptno > 4;
     END LOOP;
 END;
 /
+
 --WHILE LOOP
 DECLARE
-    V_DEPTNO NUMBER := 0;
+    v_deptno NUMBER := 0;
 BEGIN
- WHILE V_DEPTNO < 4 LOOP 
-    DBMS_OUTPUT.PUT_LINE('현재 V_DEPTNO : ' || V_DEPTNO);
-    V_DEPTNO := V_DEPTNO +1;
+    WHILE v_deptno < 4 LOOP
+        dbms_output.put_line('현재 V_DEPTNO : ' || v_deptno);
+        v_deptno := v_deptno + 1;
     END LOOP;
 END;
 /
 
 --FOR 시작값 ..종료값 : 반복문을 통해서 시작값 ~ 종료값을 사용
 BEGIN
-FOR i in 0..4 LOOP --0..4 :  0~4까지
-    DBMS_OUTPUT.PUT_LINE('현재 i : ' || i);
+    FOR i IN 0..4 LOOP
+        dbms_output.put_line('현재 i : ' || i);
     END LOOP;
 END;
 /
 
 --REVERSE 거꾸로 사용
 BEGIN
-FOR i in REVERSE 0..4 LOOP --0..4 :  0~4까지
-    DBMS_OUTPUT.PUT_LINE('현재 i : ' || i);
+    FOR i IN REVERSE 0..4 LOOP
+        dbms_output.put_line('현재 i : ' || i);
     END LOOP;
 END;
 /
 
 --숫자 1~10 까지 출력(홀수만)
 BEGIN
-FOR i in 1..10 LOOP 
-    IF MOD(i,2) = 1 THEN
-    DBMS_OUTPUT.PUT_LINE('i : ' || i);
-    END IF;
+    FOR i IN 1..10 LOOP
+        IF MOD(i, 2) = 1 THEN
+            dbms_output.put_line('i : ' || i);
+        END IF;
     END LOOP;
 END;
 /
@@ -175,13 +186,12 @@ END;
 DECLARE
     v_dept_row dept%ROWTYPE;
 BEGIN
-SELECT deptno, dname, loc into v_dept_row
-from dept
-where deptno=40;
+    SELECT deptno, dname, loc INTO v_dept_row
+    FROM dept
+    WHERE deptno=40;
     dbms_output.put_line('DEPTNO : ' || v_dept_row.deptno);
     dbms_output.put_line('DNAME : ' || v_dept_row.dname);
     dbms_output.put_line('LOC : ' || v_dept_row.loc);
-    
 END;
 /
 
@@ -199,72 +209,76 @@ END;
 --close : 커서 닫기
 
 DECLARE
-   -- 커서 데이터를 입력할 변수 선언
-   V_DEPT_ROW DEPT%ROWTYPE;
-   -- 명시적 커서 선언
-   CURSOR c1 IS
-       SELECT DEPTNO, DNAME, LOC
-       FROM DEPT
-       WHERE DEPTNO = 40;
+    -- 커서 데이터를 입력할 변수 선언
+    V_DEPT_ROW DEPT%ROWTYPE;
+    -- 명시적 커서 선언
+    CURSOR c1 IS
+        SELECT DEPTNO,DNAME,LOC
+        FROM DEPT
+        WHERE DEPTNO=40;
 BEGIN
-     -- 커서 열기
-     OPEN C1;
-     
-     --읽어온 데이터 사용
-     FETCH c1 INTO V_DEPT_ROW;
-     
+    -- 커서 열기
+    OPEN c1;
+    
+    -- 읽어온 데이터 사용
+    FETCH c1 INTO V_DEPT_ROW;
+    
     dbms_output.put_line('DEPTNO : ' || v_dept_row.deptno);
     dbms_output.put_line('DNAME : ' || v_dept_row.dname);
     dbms_output.put_line('LOC : ' || v_dept_row.loc);
-     
-     --커서 닫기
-     CLOSE c1;
+    
+    -- 커서 닫기
+    CLOSE c1;
+    
 END;
 /
    
 -- 여러 행이 조회되는 경우
 DECLARE
-   -- 커서 데이터를 입력할 변수 선언
-   V_DEPT_ROW DEPT%ROWTYPE;
-   -- 명시적 커서 선언
-   CURSOR c1 IS
-       SELECT DEPTNO, DNAME, LOC
-       FROM DEPT;
+    -- 커서 데이터를 입력할 변수 선언
+    V_DEPT_ROW DEPT%ROWTYPE;
+    -- 명시적 커서 선언
+    CURSOR c1 IS
+        SELECT DEPTNO,DNAME,LOC
+        FROM DEPT;
 BEGIN
-     -- 커서 열기
-     OPEN C1;
+    -- 커서 열기
+    OPEN c1;
      
-     LOOP
-     --읽어온 데이터 사용
-     FETCH c1 INTO V_DEPT_ROW;
-     
-     --커서에서 더이상 읽어올 행이 없을 때 까지
-     EXIT WHEN c1%NOTFOUND;
-     
-      dbms_output.put_line('DEPTNO : ' || v_dept_row.deptno);
-      dbms_output.put_line('DNAME : ' || v_dept_row.dname);
-      dbms_output.put_line('LOC : ' || v_dept_row.loc);
-     END LOOP;        
-     
-    --커서 닫기
-     CLOSE c1;
+    LOOP
+        -- 읽어온 데이터 사용
+        FETCH c1 INTO V_DEPT_ROW;
+        
+        -- 커서에서 더이상 읽어올 행이 없을 때 까지
+        EXIT WHEN c1%NOTFOUND;
+        
+        
+        dbms_output.put_line('DEPTNO : ' || v_dept_row.deptno);
+        dbms_output.put_line('DNAME : ' || v_dept_row.dname);
+        dbms_output.put_line('LOC : ' || v_dept_row.loc);
+    END LOOP;
+    
+    
+    -- 커서 닫기
+    CLOSE c1;
+    
 END;
 /
 
 --Cursor for ~ loop
-DECLARE  
-   -- 명시적 커서 선언
-   CURSOR c1 IS
-       SELECT DEPTNO, DNAME, LOC
-       FROM DEPT;
-BEGIN
-     -- 자동 OPEN, FETCH, CLOSE    
-     FOR c1_rec IN c1 LOOP     
-      dbms_output.put_line('DEPTNO : ' || c1_rec.deptno
-      || 'DNAME : ' || c1_rec.dname
-      || 'LOC : ' || c1_rec..loc);
-     END LOOP;        
+DECLARE   
+    -- 명시적 커서 선언
+    CURSOR c1 IS
+        SELECT DEPTNO,DNAME,LOC
+        FROM DEPT;
+BEGIN 
     
+    FOR c1_rec IN c1 LOOP        
+        dbms_output.put_line('DEPTNO : ' || v_dept_row.deptno
+        || ' DNAME : ' || v_dept_row.dname
+        || ' LOC : ' || v_dept_row.loc);
+    END LOOP;
+        
 END;
 /
 

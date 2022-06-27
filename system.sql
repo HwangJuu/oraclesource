@@ -35,8 +35,9 @@ grant resource,connect to test1;
 alter user test1 IDENTIFIED BY 54321;
 
 --사용자 삭제 ( 커맨드 창 닫고 삭제하기)
-drop user test1;
 --drop user test1 cascade; 값을 같이 삭제
+drop user test1 cascade;
+
 
 --수업중 사용할 생성자
 create user javadb IDENTIFIED BY 12345;
@@ -44,3 +45,19 @@ grant resource, connect to javadb;
 
 --scott에게 view 생성 권한 부여
 grant create view to scott;
+
+
+--프로젝트
+create user solmarket IDENTIFIED BY 12345;
+grant resource, connect to solmarket;
+
+
+-- 파이썬 수업중 사용할 생성자
+create user pyuser IDENTIFIED BY 12345;
+grant resource, connect to pyuser;
+
+
+
+
+
+

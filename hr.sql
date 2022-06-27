@@ -157,6 +157,12 @@ WHERE
     hire_date BETWEEN '2004-01-01' AND '2004-12-31'
 ORDER BY
     hire_date; -- asc 생략 가능
+    
+    
+    
+    
+    
+--2022.03.18
  -- LIKE 와 와일드 카드 사용    
 
 -- [문제12] '2004'년도에 고용된 모든 사람들의 last_name,hire_date를 조회하여
@@ -224,7 +230,7 @@ WHERE
     manager_id IS NULL;
 
 --[문제] ST_CLERK인 JOB_ID를 가진 사원이 없는 부서 id 조회
---단, 부서번호가 null인 앖은 제외한다.
+--단, 부서번호가 null인 값은 제외한다.
 
 SELECT
     department_id
@@ -248,14 +254,19 @@ WHERE
     
 --[문제] first_name이 Curtis인 사람의 first_name, last_name, phone_number,job_id 조회
 --단, job_id의 결과는 소문자로 출력하기
-select first_name, last_name, phone_number,LOWER(job_id)
-from employees
-where first_name = 'Curtis'
-
+SELECT
+    first_name,
+    last_name,
+    phone_number,
+    lower(job_id)
+FROM
+    employees
+WHERE
+    first_name = 'Curtis';
 
 --[문제] 부서번호가 60,70,80,90인 사원들의 employee_id, first_name, last_name, department_id
 -- job_id 조회하기. 단, job_id가 IT _PROG 인 사원의 경우 프로그래머로 변경하여 출력
-select
+SELECT
     employee_id,
     first_name,
     last_name,
@@ -268,32 +279,44 @@ WHERE
 
 --[문제] job_id가 AD_PRES,PU_CLERK인 사원들의 employee_id, first_name, last_name, department_id
 -- job_id 조회하기, 단 사원명은 first_name과 last_name을 연결하여 출력
-SELECT employee_id,concat(first_name, concat(' ', last_name)),department_id,job_id
-from employees
-where job_id in('AD_PRES', 'PU_CLERK');
+SELECT
+    employee_id,
+    concat(first_name, concat(' ', last_name)),
+    department_id,
+    job_id
+FROM
+    employees
+WHERE
+    job_id IN ( 'AD_PRES', 'PU_CLERK' );
 
-SELECT employee_id,first_name ||' '|| last_name, department_id,job_id
-from employees
-where job_id in('AD_PRES', 'PU_CLERK');
+SELECT
+    employee_id,
+    first_name
+    || ' '
+    || last_name,
+    department_id,
+    job_id
+FROM
+    employees
+WHERE
+    job_id IN ( 'AD_PRES', 'PU_CLERK' );
 
 --2022.03.21
 --[문제] 부서 80의 각 사원에 대해 적용 가능한 세율을 표시
 --2000미만 - 0%,4000미만 9%,6000미만 20%,
 --8000미만 30%, 10,000미만 40%, 12,000미만 42%,
 --14,000미만 44% 나머지 45%
-select last_name, salary,
-  decode(trunc(salary/2000),
-    0, 0.00,
-    1, 0.09,
-    2, 0.20,
-    3, 0.30,
-    4, 0.40,
-    5, 0.42,
-    6, 0.44,
-    0.45
-  )as tax_rate
-from employees
-where department_id = 80;
+SELECT
+    last_name,
+    salary,
+    decode(trunc(salary / 2000), 0, 0.00, 1, 0.09,
+           2, 0.20, 3, 0.30, 4,
+           0.40, 5, 0.42, 6, 0.44,
+           0.45) AS tax_rate
+FROM
+    employees
+WHERE
+    department_id = 80;
 
 --[문제] 회사 내의 최대 연봉 및 최소 연봉 차 출력
 SELECT
@@ -419,7 +442,8 @@ WHERE
     d.department_name = 'Executive';
 
 --[실습] 기존의 직업을 여전히 가지고 있는 사원들의 employee_id, job_id출력
---employees 셀프 조인, job_history 내부조인
+-- job_history 내부조인
+
 SELECT
     e.employee_id,
     e.job_id
